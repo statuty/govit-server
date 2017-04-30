@@ -20,7 +20,6 @@ public class LocationResource {
         this.esLocationService = esLocationService;
     }
 
-
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addLocation(@RequestBody Location location) {
         URI uri = ServletUriComponentsBuilder

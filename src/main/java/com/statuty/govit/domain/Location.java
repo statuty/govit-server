@@ -11,12 +11,14 @@ public class Location {
     private String name;
     private String description;
     private GeoPoint coordinates;
+    private Category category;
 
-    public Location(String id, String name, String description, GeoPoint coordinates) {
+    public Location(String id, String name, String description, GeoPoint coordinates, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.coordinates = coordinates;
+        this.category = category;
     }
 
     public Location() {
@@ -36,5 +38,9 @@ public class Location {
 
     public GeoPoint getCoordinates() {
         return coordinates;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 }
