@@ -2,7 +2,11 @@ package com.statuty.govit.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+
+import java.util.List;
 
 @Document(indexName = "locations", type = "location")
 public class Location {
@@ -12,13 +16,16 @@ public class Location {
     private String description;
     private GeoPoint coordinates;
     private Category category;
+    @Field(type = FieldType.Nested)
+    private List<WorkingDay> workingDays;
 
-    public Location(String id, String name, String description, GeoPoint coordinates, Category category) {
+    public Location(String id, String name, String description, GeoPoint coordinates, Category category, List<WorkingDay> workingDays) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.coordinates = coordinates;
         this.category = category;
+        this.workingDays = workingDays;
     }
 
     public Location() {
@@ -42,5 +49,9 @@ public class Location {
 
     public Category getCategory() {
         return category;
+    }
+
+    public List<WorkingDay> getWorkingDays() {
+        return workingDays;
     }
 }

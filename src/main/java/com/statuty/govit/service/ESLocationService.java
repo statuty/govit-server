@@ -1,9 +1,9 @@
 package com.statuty.govit.service;
 
 import com.statuty.govit.domain.Location;
+import com.statuty.govit.repository.ESCustomLocationRepository;
 import com.statuty.govit.repository.ESLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +11,12 @@ import java.util.List;
 @Service
 public class ESLocationService {
     private final ESLocationRepository repository;
+    private final ESCustomLocationRepository customRepository;
 
     @Autowired
-    public ESLocationService(ESLocationRepository repository) {
+    public ESLocationService(ESLocationRepository repository, ESCustomLocationRepository customRepository) {
         this.repository = repository;
+        this.customRepository = customRepository;
     }
 
     public String save(Location location) {
@@ -25,7 +27,7 @@ public class ESLocationService {
         return repository.findOne(id);
     }
 
-    public List<Location> findByDistance(double latitude, double longitude, String distance, int page, int size) {
-        return repository.findByDistance(latitude, longitude, distance, new PageRequest(page, size)).getContent();
+    public List<Location> find(double latitude, double longitude, String distance, String category, String workingDay, String workingTime, int page, int size) {
+        return customRepository.find(latitude, longitude, distance, category, workingDay, workingTime, page, size);
     }
 }

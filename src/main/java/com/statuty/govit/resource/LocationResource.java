@@ -37,8 +37,13 @@ public class LocationResource {
     public List<Location> getLocationByDistance(@RequestParam(name = "longitude") double longitude,
                                                 @RequestParam(name = "latitude") double latitude,
                                                 @RequestParam(name = "distance", defaultValue = "1km") String distance,
+                                                @RequestParam(name = "category", required = false) String category,
+                                                @RequestParam(name = "workingDay", required = false) String workingDay,
+                                                @RequestParam(name = "workingTime", required = false) String workingTime,
                                                 @RequestParam(name = "page", defaultValue = "0") int page,
                                                 @RequestParam(name = "size", defaultValue = "10") int size) {
-        return esLocationService.findByDistance(latitude, longitude, distance, page, size);
+        return esLocationService.find(latitude, longitude, distance, category, workingDay, workingTime, page, size);
     }
+
+
 }
