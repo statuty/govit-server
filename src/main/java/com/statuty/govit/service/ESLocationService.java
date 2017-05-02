@@ -27,7 +27,11 @@ public class ESLocationService {
         return repository.findOne(id);
     }
 
-    public List<Location> find(double latitude, double longitude, String distance, String category, String workingDay, String workingTime, int page, int size) {
-        return customRepository.find(latitude, longitude, distance, category, workingDay, workingTime, page, size);
+    public List<Location> find(double latitude, double longitude, String distance, String name, String category, String workingDay, String workingTime, int page, int size) {
+        return customRepository.find(latitude, longitude, distance, name, category, workingDay, workingTime, page, size);
+    }
+
+    public List<String> findCategories() {
+        return customRepository.findCategories();
     }
 }

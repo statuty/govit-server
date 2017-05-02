@@ -38,11 +38,17 @@ public class LocationResource {
                                                 @RequestParam(name = "latitude") double latitude,
                                                 @RequestParam(name = "distance", defaultValue = "1km") String distance,
                                                 @RequestParam(name = "category", required = false) String category,
+                                                @RequestParam(name = "name", required = false) String name,
                                                 @RequestParam(name = "workingDay", required = false) String workingDay,
                                                 @RequestParam(name = "workingTime", required = false) String workingTime,
                                                 @RequestParam(name = "page", defaultValue = "0") int page,
                                                 @RequestParam(name = "size", defaultValue = "10") int size) {
-        return esLocationService.find(latitude, longitude, distance, category, workingDay, workingTime, page, size);
+        return esLocationService.find(latitude, longitude, distance, name, category, workingDay, workingTime, page, size);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/categories")
+    public List<String> getCategories() {
+        return esLocationService.findCategories();
     }
 
 
