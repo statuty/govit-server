@@ -26,10 +26,16 @@ public class ESCustomLocationRepository {
         this.elasticsearchTemplate = elasticsearchTemplate;
     }
 
-    public List<Location> find(double latitude, double longitude, String distance, String name, String category, String workingDay, String workingTime, int page, int size) {
+    public List<Location> find(double latitude, double longitude, String distance, String name, String category,
+                               String workingDay, String workingTime, Boolean isActivated, int page, int size) {
         BoolQueryBuilder queryBuilder = boolQuery()
             .filter(geoDistanceQuery("coordinates").lat(latitude).lon(longitude).distance(distance))
             .must(Objects.nonNull(name) ? matchQuery("name", name) : matchAllQuery())
+            .must(Objects.nonNull(isActivated) && isActivated == Boolean.FALSE ? boolQuery()
+                .should(boolQuery().mustNot(existsQuery("isActivated")))
+                .should(matchQuery("isActivated", Boolean.FALSE)
+                ).minimumNumberShouldMatch(1) : matchAllQuery())
+            .must(Objects.nonNull(isActivated) && isActivated == Boolean.TRUE ? matchQuery("isActivated", true) : matchAllQuery())
             .must(Objects.nonNull(category) ? matchQuery("category.name", category) : matchAllQuery())
             .must(Objects.nonNull(workingDay) ? nestedQuery("workingDays",
                 boolQuery()
